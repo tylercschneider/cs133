@@ -31,5 +31,13 @@ module Cs133
 
       assert_equal 3600, range.length
     end
+
+    def test_this_month_spans_the_calendar_month_in_zone
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.this_month(zone: zone, now: Time.utc(2026, 6, 15, 12))
+
+      assert_equal tz.local(2026, 6, 1)..tz.local(2026, 6, 30).end_of_day, range.to_range
+    end
   end
 end
