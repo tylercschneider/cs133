@@ -66,5 +66,15 @@ module Cs133
 
       assert_equal tz.local(2026, 5, 16)..tz.local(2026, 6, 14).end_of_day, range.to_range
     end
+
+    # 2027-01-01 03:00 UTC is still 2026-12-31 in Los Angeles, so YTD is 2026.
+    def test_year_to_date_runs_from_start_of_year_to_now_in_zone
+      zone = "America/Los_Angeles"
+      now = Time.utc(2027, 1, 1, 3)
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.year_to_date(zone: zone, now: now)
+
+      assert_equal tz.local(2026, 1, 1)..now.in_time_zone(tz), range.to_range
+    end
   end
 end

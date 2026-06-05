@@ -20,6 +20,11 @@ module Cs133
       last_n_days(30, zone: zone, now: now)
     end
 
+    def self.year_to_date(zone:, now: Time.now)
+      anchor = now.in_time_zone(zone)
+      new(start_time: anchor.beginning_of_year, end_time: anchor)
+    end
+
     def self.last_n_days(count, zone:, now:)
       anchor = now.in_time_zone(zone)
       new(start_time: (anchor - (count - 1).days).beginning_of_day, end_time: anchor.end_of_day)
