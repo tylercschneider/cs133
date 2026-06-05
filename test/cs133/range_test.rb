@@ -48,5 +48,15 @@ module Cs133
 
       assert_equal tz.local(2026, 5, 1)..tz.local(2026, 5, 31).end_of_day, range.to_range
     end
+
+    # 2026-06-15 03:00 UTC is still 2026-06-14 in Los Angeles, so the 7-day
+    # window (inclusive, day-aligned) is Jun 8 through Jun 14.
+    def test_last_7_days_covers_seven_day_aligned_days_ending_today_in_zone
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.last_7_days(zone: zone, now: Time.utc(2026, 6, 15, 3))
+
+      assert_equal tz.local(2026, 6, 8)..tz.local(2026, 6, 14).end_of_day, range.to_range
+    end
   end
 end
