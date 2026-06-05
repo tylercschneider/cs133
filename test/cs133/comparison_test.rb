@@ -19,5 +19,13 @@ module Cs133
 
       assert_same current, comparison.current
     end
+
+    def test_exposes_the_previous_range
+      current = Range.last_7_days(zone: "America/Los_Angeles", now: Time.utc(2026, 6, 15, 3))
+      previous = current.previous
+      comparison = Comparison.new(current: current, previous: previous)
+
+      assert_same previous, comparison.previous
+    end
   end
 end
