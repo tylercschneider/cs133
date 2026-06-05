@@ -8,5 +8,9 @@ module Cs133
       @start_time = start_time
       @end_time = end_time
     end
+
+    def to_range
+      start_time..end_time
+    end
   end
 end
