@@ -12,5 +12,9 @@ module Cs133
     def to_range
       start_time..end_time
     end
+
+    def length
+      end_time - start_time
+    end
   end
 end

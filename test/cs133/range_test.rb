@@ -25,5 +25,11 @@ module Cs133
 
       assert_equal start_time..end_time, range.to_range
     end
+
+    def test_length_is_the_duration_in_seconds
+      range = Range.new(start_time: Time.utc(2026, 6, 1), end_time: Time.utc(2026, 6, 1, 1))
+
+      assert_equal 3600, range.length
+    end
   end
 end
