@@ -7,6 +7,11 @@ module Cs133
       new(start_time: anchor.beginning_of_month, end_time: anchor.end_of_month)
     end
 
+    def self.last_month(zone:, now: Time.now)
+      anchor = now.in_time_zone(zone).prev_month
+      new(start_time: anchor.beginning_of_month, end_time: anchor.end_of_month)
+    end
+
     attr_reader :start_time, :end_time
 
     def initialize(start_time:, end_time:)

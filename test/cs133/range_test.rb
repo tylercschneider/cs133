@@ -39,5 +39,14 @@ module Cs133
 
       assert_equal tz.local(2026, 6, 1)..tz.local(2026, 6, 30).end_of_day, range.to_range
     end
+
+    # 2026-07-01 03:00 UTC is still 2026-06-30 in Los Angeles, so "last month" is May.
+    def test_last_month_uses_the_previous_calendar_month_in_zone
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.last_month(zone: zone, now: Time.utc(2026, 7, 1, 3))
+
+      assert_equal tz.local(2026, 5, 1)..tz.local(2026, 5, 31).end_of_day, range.to_range
+    end
   end
 end
