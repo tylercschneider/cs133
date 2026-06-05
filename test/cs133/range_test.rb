@@ -58,5 +58,13 @@ module Cs133
 
       assert_equal tz.local(2026, 6, 8)..tz.local(2026, 6, 14).end_of_day, range.to_range
     end
+
+    def test_last_30_days_covers_thirty_day_aligned_days_ending_today_in_zone
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.last_30_days(zone: zone, now: Time.utc(2026, 6, 15, 3))
+
+      assert_equal tz.local(2026, 5, 16)..tz.local(2026, 6, 14).end_of_day, range.to_range
+    end
   end
 end

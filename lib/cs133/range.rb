@@ -16,6 +16,10 @@ module Cs133
       last_n_days(7, zone: zone, now: now)
     end
 
+    def self.last_30_days(zone:, now: Time.now)
+      last_n_days(30, zone: zone, now: now)
+    end
+
     def self.last_n_days(count, zone:, now:)
       anchor = now.in_time_zone(zone)
       new(start_time: (anchor - (count - 1).days).beginning_of_day, end_time: anchor.end_of_day)
