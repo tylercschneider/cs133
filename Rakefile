@@ -9,4 +9,12 @@ require "rubocop/rake_task"
 
 RuboCop::RakeTask.new
 
+require_relative "lib/cs133"
+
+begin
+  require "the_local/rake"
+rescue LoadError
+  # the_local not installed — build/install tasks unavailable.
+end
+
 task default: %i[test rubocop]
