@@ -12,5 +12,9 @@ module Cs133
     def delta
       current - previous
     end
+
+    def percent_change
+      delta / previous.to_f
+    end
   end
 end
