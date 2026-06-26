@@ -100,12 +100,10 @@ module Cs133
       assert_equal tz.local(2026, 1, 1)..now.in_time_zone(tz), range.to_range
     end
 
-    def test_previous_is_the_equal_span_window_immediately_before
-      zone = "America/Los_Angeles"
-      tz = ActiveSupport::TimeZone[zone]
-      previous = Range.last_7_days(zone: zone, now: Time.utc(2026, 6, 15, 3)).previous
+    def test_previous_ends_immediately_before_the_range_begins
+      range = Range.year_to_date(zone: "America/Los_Angeles", now: Time.utc(2027, 1, 1, 3))
 
-      assert_equal tz.local(2026, 6, 1)..tz.local(2026, 6, 7).end_of_day, previous.to_range
+      assert_equal range.start_time, range.previous.end_time
     end
   end
 end

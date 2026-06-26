@@ -56,8 +56,7 @@ module Cs133
     end
 
     def previous
-      span = (end_time.to_date - start_time.to_date).to_i + 1
-      self.class.new(start_time: start_time - span.days, end_time: end_time - span.days)
+      self.class.new(start_time: start_time - length, end_time: end_time - length)
     end
   end
 end
