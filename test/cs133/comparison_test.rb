@@ -33,5 +33,11 @@ module Cs133
 
       assert_equal :down, comparison.direction
     end
+
+    def test_direction_is_flat_when_current_equals_previous
+      comparison = Comparison.new(current: 100, previous: 100)
+
+      assert_equal :flat, comparison.direction
+    end
   end
 end
