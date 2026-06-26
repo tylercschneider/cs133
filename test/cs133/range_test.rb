@@ -12,6 +12,15 @@ module Cs133
       assert_equal tz.local(2026, 6, 1)..tz.local(2026, 6, 30).end_of_day, range.to_range
     end
 
+    def test_between_covers_the_whole_single_day_when_start_equals_end
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      day = Date.new(2026, 6, 15)
+      range = Range.between(start_date: day, end_date: day, zone: zone)
+
+      assert_equal tz.local(2026, 6, 15)..tz.local(2026, 6, 15).end_of_day, range.to_range
+    end
+
     def test_exposes_start_time
       start_time = Time.utc(2026, 6, 1)
       range = Range.new(start_time: start_time, end_time: Time.utc(2026, 6, 30))
