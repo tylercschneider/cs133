@@ -14,6 +14,8 @@ module Cs133
     end
 
     def percent_change
+      return if previous.zero?
+
       delta / previous.to_f
     end
   end

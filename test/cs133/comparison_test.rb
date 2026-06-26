@@ -15,5 +15,11 @@ module Cs133
 
       assert_in_delta 0.2, comparison.percent_change
     end
+
+    def test_percent_change_is_nil_when_previous_is_zero
+      comparison = Comparison.new(current: 120, previous: 0)
+
+      assert_nil comparison.percent_change
+    end
   end
 end
