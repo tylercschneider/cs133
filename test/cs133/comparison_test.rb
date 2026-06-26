@@ -4,28 +4,40 @@ require "test_helper"
 
 module Cs133
   class ComparisonTest < Minitest::Test
-    def test_rejects_ranges_of_different_lengths
-      current = Range.new(start_time: Time.utc(2026, 6, 8), end_time: Time.utc(2026, 6, 15))
-      shorter = Range.new(start_time: Time.utc(2026, 6, 1), end_time: Time.utc(2026, 6, 4))
+    def test_delta_is_current_minus_previous
+      comparison = Comparison.new(current: 120, previous: 100)
 
-      assert_raises(Cs133::Comparison::UnequalLengthError) do
-        Comparison.new(current: current, previous: shorter)
-      end
+      assert_equal 20, comparison.delta
     end
 
-    def test_exposes_the_current_range
-      current = Range.last_7_days(zone: "America/Los_Angeles", now: Time.utc(2026, 6, 15, 3))
-      comparison = Comparison.new(current: current, previous: current.previous)
+    def test_percent_change_is_the_fractional_change_from_previous
+      comparison = Comparison.new(current: 120, previous: 100)
 
-      assert_same current, comparison.current
+      assert_in_delta 0.2, comparison.percent_change
     end
 
-    def test_exposes_the_previous_range
-      current = Range.last_7_days(zone: "America/Los_Angeles", now: Time.utc(2026, 6, 15, 3))
-      previous = current.previous
-      comparison = Comparison.new(current: current, previous: previous)
+    def test_percent_change_is_nil_when_previous_is_zero
+      comparison = Comparison.new(current: 120, previous: 0)
 
-      assert_same previous, comparison.previous
+      assert_nil comparison.percent_change
+    end
+
+    def test_direction_is_up_when_current_exceeds_previous
+      comparison = Comparison.new(current: 120, previous: 100)
+
+      assert_equal :up, comparison.direction
+    end
+
+    def test_direction_is_down_when_current_trails_previous
+      comparison = Comparison.new(current: 80, previous: 100)
+
+      assert_equal :down, comparison.direction
+    end
+
+    def test_direction_is_flat_when_current_equals_previous
+      comparison = Comparison.new(current: 100, previous: 100)
+
+      assert_equal :flat, comparison.direction
     end
   end
 end

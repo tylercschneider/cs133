@@ -2,15 +2,28 @@
 
 module Cs133
   class Comparison
-    class UnequalLengthError < Error; end
-
     attr_reader :current, :previous
 
     def initialize(current:, previous:)
-      raise UnequalLengthError unless current.length == previous.length
-
       @current = current
       @previous = previous
+    end
+
+    def delta
+      current - previous
+    end
+
+    def percent_change
+      return if previous.zero?
+
+      delta / previous.to_f
+    end
+
+    def direction
+      return :up if delta.positive?
+      return :down if delta.negative?
+
+      :flat
     end
   end
 end
