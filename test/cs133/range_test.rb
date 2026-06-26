@@ -21,6 +21,12 @@ module Cs133
       assert_equal tz.local(2026, 6, 15)..tz.local(2026, 6, 15).end_of_day, range.to_range
     end
 
+    def test_between_rejects_a_start_date_after_the_end_date
+      assert_raises(Cs133::Range::InvalidBoundsError) do
+        Range.between(start_date: Date.new(2026, 6, 30), end_date: Date.new(2026, 6, 1), zone: "America/Los_Angeles")
+      end
+    end
+
     def test_exposes_start_time
       start_time = Time.utc(2026, 6, 1)
       range = Range.new(start_time: start_time, end_time: Time.utc(2026, 6, 30))

@@ -2,7 +2,11 @@
 
 module Cs133
   class Range
+    class InvalidBoundsError < Error; end
+
     def self.between(start_date:, end_date:, zone:)
+      raise InvalidBoundsError if start_date > end_date
+
       new(start_time: start_date.in_time_zone(zone).beginning_of_day,
           end_time: end_date.in_time_zone(zone).end_of_day)
     end
