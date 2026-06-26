@@ -4,6 +4,14 @@ require "test_helper"
 
 module Cs133
   class RangeTest < Minitest::Test
+    def test_between_spans_the_selected_dates_from_day_start_to_day_end_in_zone
+      zone = "America/Los_Angeles"
+      tz = ActiveSupport::TimeZone[zone]
+      range = Range.between(start_date: Date.new(2026, 6, 1), end_date: Date.new(2026, 6, 30), zone: zone)
+
+      assert_equal tz.local(2026, 6, 1)..tz.local(2026, 6, 30).end_of_day, range.to_range
+    end
+
     def test_exposes_start_time
       start_time = Time.utc(2026, 6, 1)
       range = Range.new(start_time: start_time, end_time: Time.utc(2026, 6, 30))

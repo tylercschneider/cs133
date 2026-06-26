@@ -2,6 +2,11 @@
 
 module Cs133
   class Range
+    def self.between(start_date:, end_date:, zone:)
+      new(start_time: start_date.in_time_zone(zone).beginning_of_day,
+          end_time: end_date.in_time_zone(zone).end_of_day)
+    end
+
     def self.this_month(zone:, now: Time.now)
       anchor = now.in_time_zone(zone)
       new(start_time: anchor.beginning_of_month, end_time: anchor.end_of_month)
