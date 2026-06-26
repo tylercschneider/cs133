@@ -20,7 +20,9 @@ module Cs133
     end
 
     def direction
-      :up if delta.positive?
+      return :up if delta.positive?
+
+      :down
     end
   end
 end

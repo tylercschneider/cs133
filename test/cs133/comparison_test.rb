@@ -27,5 +27,11 @@ module Cs133
 
       assert_equal :up, comparison.direction
     end
+
+    def test_direction_is_down_when_current_trails_previous
+      comparison = Comparison.new(current: 80, previous: 100)
+
+      assert_equal :down, comparison.direction
+    end
   end
 end
