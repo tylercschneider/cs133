@@ -21,5 +21,11 @@ module Cs133
 
       assert_nil comparison.percent_change
     end
+
+    def test_direction_is_up_when_current_exceeds_previous
+      comparison = Comparison.new(current: 120, previous: 100)
+
+      assert_equal :up, comparison.direction
+    end
   end
 end

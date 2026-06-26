@@ -18,5 +18,9 @@ module Cs133
 
       delta / previous.to_f
     end
+
+    def direction
+      :up if delta.positive?
+    end
   end
 end
